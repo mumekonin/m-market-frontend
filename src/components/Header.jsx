@@ -43,6 +43,12 @@ export default function Header() {
 
   return (
     <header className="site-header">
+      {/* Dark overlay behind mobile nav */}
+      <div
+        className={`nav-overlay${menuOpen ? ' is-open' : ''}`}
+        onClick={closeMenu}
+      />
+
       <div className="container">
         <div className="brand">
           <Link to="/" className="logo-link">M-MARKET</Link>

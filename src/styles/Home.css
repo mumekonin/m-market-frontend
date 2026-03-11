@@ -305,6 +305,10 @@ body {
   background: #1a1a22;
 }
 
+.nav-overlay {
+  display: none;
+}
+
 .menu-btn {
   display: none;
   background: transparent;
@@ -2109,18 +2113,19 @@ body {
     position: fixed;
     top: 0;
     right: 0;
-    width: 280px;
+    width: min(300px, 80vw);
     height: 100vh;
     background: #0d0d14;
     flex-direction: column;
     justify-content: center;
-    padding: 40px;
-    gap: 40px;
-    transition: transform .4s ease;
-    box-shadow: -10px 0 40px rgba(0, 0, 0, .6);
-    z-index: 999;
-    transform: translateX(110%);
+    padding: 48px 36px;
+    gap: 36px;
+    transition: transform .35s cubic-bezier(.4, 0, .2, 1), visibility .35s;
+    box-shadow: -20px 0 60px rgba(0, 0, 0, .8);
+    z-index: 1001;
+    transform: translateX(105%);
     visibility: hidden;
+    overflow: hidden;
   }
 
   .nav-wrapper.is-open {
@@ -2128,16 +2133,62 @@ body {
     visibility: visible;
   }
 
+  .nav-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .7);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .35s ease;
+  }
+
+  .nav-overlay.is-open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
   .nav-list {
     flex-direction: column;
-    gap: 22px;
+    gap: 6px;
+  }
+
+  .nav-link {
+    font-size: 17px;
+    font-weight: 600;
+    color: #aaa;
+    display: block;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .05);
+  }
+
+  .nav-link:hover {
+    color: #f3a81c;
+    padding-left: 6px;
   }
 
   .auth-group {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     margin-left: 0;
-    gap: 14px;
+    gap: 10px;
+  }
+
+  .login-link {
+    font-size: 15px;
+    padding: 12px 0;
+    text-align: center;
+    border: 1.5px solid rgba(243, 168, 28, .3);
+    border-radius: 50px;
+  }
+
+  .signup-btn {
+    text-align: center;
+    padding: 12px 0;
+    border-radius: 50px;
+    font-size: 15px;
   }
 
   .hero-inner {
