@@ -760,7 +760,7 @@ export default function Admin() {
                   <select value={uploadFields.category} onChange={e => setUploadFields(p => ({...p, category: e.target.value}))}>
                     <option value="">Select category…</option>
                     <option value="phone">Phone</option><option value="laptop">Laptop</option>
-                    <option value="ipad">iPad / Tablet</option><option value="watch">Watch</option><option value="airpod">AirPods</option>
+                    <option value="iPad">iPad / Tablet</option><option value="watch">Watch</option><option value="AirPods">AirPods</option>
                   </select>
                 </div>
               </div>
