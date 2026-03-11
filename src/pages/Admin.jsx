@@ -345,6 +345,13 @@ select option{background:#1a1a24;color:#e8e8f0}
 }
 `;
 
+function buildImgUrl(imageUrl) {
+  if (!imageUrl) return null;
+  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) return imageUrl;
+  const clean = imageUrl.replace(/\\/g, '/').replace(/^\/+/, '');
+  return `${SERVER_URL}/${clean}`;
+}
+
 function formatBytes(b) {
   if (b < 1024) return b + ' B';
   if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
@@ -377,7 +384,7 @@ function ProductRow({ p, onCopy }) {
   const stock = Number(p.stock) || 0;
   const stockClass = stock === 0 ? 'no-stock' : stock <= 5 ? 'low-stock' : 'in-stock';
   const stockLabel = stock === 0 ? '✕ Out' : stock <= 5 ? `⚠ ${stock}` : `✓ ${stock}`;
-  const imgSrc = p.imageUrl ? `${SERVER_URL}/${p.imageUrl.replace(/\\/g, '/').replace(/^\/+/, '')}` : null;
+  const imgSrc = buildImgUrl(p.imageUrl);
   return (
     <tr>
       <td>
@@ -541,7 +548,8 @@ export default function Admin() {
       const res = await fetch(`${SERVER_URL}/products/upload`, { method: 'POST', headers: authHeaders(), body: formData });
       const data = await res.json();
       if (res.ok) {
-        setUploadStatus({ type: 'success', msg: `✓ Product uploaded! — ${data.proName || proName}` });
+        const name = data.product?.proName || data.proName || proName;
+        setUploadStatus({ type: 'success', msg: `✓ Product uploaded successfully! — ${name}` });
         showToast('Product uploaded!');
         setUploadFields({ proName:'', proDescrption:'', price:'', stock:'', category:'', color:'', storage:'' });
         setUploadFile(null); setUploadPreview('');
@@ -567,7 +575,8 @@ export default function Admin() {
       const res = await fetch(`${SERVER_URL}/products/update/${updateId.trim()}`, { method: 'PATCH', headers: authHeaders(), body: formData });
       const data = await res.json();
       if (res.ok) {
-        setUpdateStatus({ type: 'success', msg: `✓ Product updated!${data.proName ? ' — ' + data.proName : ''}` });
+        const name = data.product?.proName || data.proName || '';
+        setUpdateStatus({ type: 'success', msg: `✓ Product updated!${name ? ' — ' + name : ''}` });
         showToast('Product updated!');
       } else {
         setUpdateStatus({ type: 'error', msg: '✕ ' + (data.message || 'Update failed.') });
@@ -760,7 +769,7 @@ export default function Admin() {
                   <select value={uploadFields.category} onChange={e => setUploadFields(p => ({...p, category: e.target.value}))}>
                     <option value="">Select category…</option>
                     <option value="phone">Phone</option><option value="laptop">Laptop</option>
-                    <option value="iPad">iPad / Tablet</option><option value="watch">Watch</option><option value="AirPods">AirPods</option>
+                    <option value="ipad">iPad / Tablet</option><option value="watch">Watch</option><option value="airpod">AirPods</option>
                   </select>
                 </div>
               </div>
