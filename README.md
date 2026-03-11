@@ -2,7 +2,7 @@
 
 # ⚡ M-MARKET ELECTRONICS
 
-### Premium Electronics E-Commerce Platform
+### Electronics E-Commerce Platform
 
 [![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-m--market--frontend.vercel.app-f3a81c?style=for-the-badge&logoColor=white)](https://m-market-frontend.vercel.app/)
 [![Backend API](https://img.shields.io/badge/🔌_API-m--market--2.onrender.com-22c55e?style=for-the-badge)](https://m-market-2.onrender.com/)
