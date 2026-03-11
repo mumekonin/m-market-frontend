@@ -17,11 +17,11 @@ const COMING_SOON = [
 ];
 
 const CATEGORIES = [
-  { key: 'phone',   label: 'Smartphones', icon: '📱' },
-  { key: 'laptop',  label: 'Laptops',     icon: '💻' },
-  { key: 'ipad',    label: 'Tablets',     icon: '📟' },
-  { key: 'AirPods', label: 'AirPods',     icon: '🎧' },
-  { key: 'watch',   label: 'Watches',     icon: '⌚' },
+  { key: 'phone',   label: 'Smartphones', icon: 'smartphone' },
+  { key: 'laptop',  label: 'Laptops',     icon: 'laptop' },
+  { key: 'ipad',    label: 'Tablets',     icon: 'tablet' },
+  { key: 'AirPods', label: 'AirPods',     icon: 'headphones' },
+  { key: 'watch',   label: 'Watches',     icon: 'watch' },
 ];
 
 function useReveal() {
@@ -55,7 +55,7 @@ export default function Home() {
     try {
       const res  = await fetch(`${SERVER_URL}/products/get-all-products`);
       const data = await res.json();
-      setProducts(Array.isArray(data) ? data.slice(0, 9) : []);
+      setProducts(Array.isArray(data) ? data : []);
     } catch { setProducts([]); }
     finally  { setLoadingProducts(false); }
   }
@@ -108,12 +108,21 @@ export default function Home() {
         </div>
         <div className="wrap hero-inner">
           <div className="hero-text">
-            <span className="hero-pill">⚡ Premium Electronics Store</span>
+            <span className="hero-pill">
+              <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>bolt</span>
+              Premium Electronics Store
+            </span>
             <h1 className="hero-h1">The future of tech<br /><span className="hero-accent">starts here.</span></h1>
             <p className="hero-sub">Discover cutting-edge smartphones, laptops, audio gear and more. Quality guaranteed. Fast delivery. Unbeatable prices.</p>
             <div className="hero-btns">
-              <a href="#products" className="btn-primary">Shop Now →</a>
-              <a href="#category" className="btn-ghost">Browse Categories</a>
+              <a href="#products" className="btn-primary">
+                <span className="material-symbols-outlined">storefront</span>
+                Shop Now
+              </a>
+              <a href="#category" className="btn-ghost">
+                <span className="material-symbols-outlined">grid_view</span>
+                Browse Categories
+              </a>
             </div>
             <div className="hero-stats">
               <div className="hstat"><strong>500+</strong><span>Products</span></div>
@@ -134,7 +143,7 @@ export default function Home() {
       <section className="cs-section reveal">
         <div className="wrap">
           <div className="section-head">
-            <span className="section-label">COMING SOON</span>
+            <span className="section-label">Coming Soon</span>
             <h2 className="section-title">Future Tech Arrivals</h2>
             <p className="section-sub">Be the first to experience next-gen innovation.</p>
           </div>
@@ -160,12 +169,12 @@ export default function Home() {
       <section id="search" className="search-section reveal">
         <div className="wrap">
           <div className="section-head">
-            <span className="section-label">SEARCH</span>
+            <span className="section-label">Search</span>
             <h2 className="section-title">Find Your Product</h2>
             <p className="section-sub">Search by name, color, storage, or category.</p>
           </div>
           <div className="search-bar">
-            <span className="search-icon">🔍</span>
+            <span className="material-symbols-outlined search-icon">search</span>
             <input
               type="text"
               placeholder="e.g. iPhone, black, 256GB..."
@@ -179,7 +188,7 @@ export default function Home() {
           </div>
           {searchMsg && <p className="search-msg">{searchMsg}</p>}
           {searchLoading && (
-            <div className="product-grid">{[1,2,3].map(i => <SkeletonProductCard key={i} />)}</div>
+            <div className="product-grid">{[1,2,3,4].map(i => <SkeletonProductCard key={i} />)}</div>
           )}
           {!searchLoading && searchResults.length > 0 && (
             <>
@@ -200,18 +209,21 @@ export default function Home() {
       <section id="products" className="products-section reveal">
         <div className="wrap">
           <div className="section-head">
-            <span className="section-label">CATALOG</span>
+            <span className="section-label">Catalog</span>
             <h2 className="section-title">Featured Electronics</h2>
             <p className="section-sub">Our latest collection of high-performance gadgets.</p>
           </div>
           {loadingProducts ? (
-            <div className="product-grid">{[1,2,3,4,5,6].map(i => <SkeletonProductCard key={i} />)}</div>
+            <div className="product-grid">{[1,2,3,4,5,6,7,8].map(i => <SkeletonProductCard key={i} />)}</div>
           ) : products.length === 0 ? (
-            <div className="empty-state"><span>📦</span><p>No products available right now.</p></div>
+            <div className="empty-state">
+              <span className="material-symbols-outlined" style={{ fontSize: '48px', color: '#333', display: 'block', marginBottom: '14px' }}>inventory_2</span>
+              <p>No products available right now.</p>
+            </div>
           ) : (
             <div className="product-grid">
               {products.map((p, i) => (
-                <div key={p._id || p.id} className="fade-in-up" style={{ animationDelay: `${i * 70}ms` }}>
+                <div key={p._id || p.id} className="fade-in-up" style={{ animationDelay: `${i * 50}ms` }}>
                   <ProductCard product={p} onViewDetails={openProduct} />
                 </div>
               ))}
@@ -224,24 +236,26 @@ export default function Home() {
       <section id="category" className="cat-section reveal">
         <div className="wrap">
           <div className="section-head">
-            <span className="section-label">BROWSE</span>
+            <span className="section-label">Browse</span>
             <h2 className="section-title">Shop by Category</h2>
             <p className="section-sub">Pick a category to explore our full range.</p>
           </div>
           <div className="cat-pills">
             {CATEGORIES.map(({ key, label, icon }) => (
               <button key={key} className={`cat-pill${activeCategory === key ? ' cat-pill-active' : ''}`} onClick={() => filterCategory(key)}>
-                <span>{icon}</span> {label}
+                <span className="material-symbols-outlined">{icon}</span>
+                {label}
               </button>
             ))}
             {activeCategory && (
               <button className="cat-pill cat-pill-clear" onClick={() => { setActiveCategory(''); setCatResults([]); }}>
-                ✕ Clear
+                <span className="material-symbols-outlined">close</span>
+                Clear
               </button>
             )}
           </div>
           {catLoading && (
-            <div className="product-grid">{[1,2,3].map(i => <SkeletonProductCard key={i} />)}</div>
+            <div className="product-grid">{[1,2,3,4].map(i => <SkeletonProductCard key={i} />)}</div>
           )}
           {!catLoading && catResults.length > 0 && (
             <>
@@ -256,7 +270,10 @@ export default function Home() {
             </>
           )}
           {!catLoading && activeCategory && catResults.length === 0 && (
-            <div className="empty-state"><span>🔍</span><p>No products found in this category.</p></div>
+            <div className="empty-state">
+              <span className="material-symbols-outlined" style={{ fontSize: '48px', color: '#333', display: 'block', marginBottom: '14px' }}>search_off</span>
+              <p>No products found in this category.</p>
+            </div>
           )}
         </div>
       </section>
@@ -268,13 +285,22 @@ export default function Home() {
             <img src="https://images.unsplash.com/photo-1491933382434-500287f9b54b?w=700&q=80" alt="M-Market store" />
           </div>
           <div className="about-text">
-            <span className="section-label">WHO WE ARE</span>
+            <span className="section-label">Who We Are</span>
             <h2 className="section-title" style={{ textAlign: 'left', marginBottom: '16px' }}>Your Trusted Partner in Modern Electronics</h2>
             <p className="about-desc">At M-Market Electronics, we don't just sell gadgets — we provide the tools for your digital success. Bridging the gap between complex technology and everyday convenience since 2024.</p>
             <ul className="about-list">
-              <li><span className="about-check">✓</span> Every device is 100% certified and tested</li>
-              <li><span className="about-check">✓</span> World-class innovation delivered to your doorstep</li>
-              <li><span className="about-check">✓</span> Expert support team available 24/7</li>
+              <li>
+                <span className="about-check"><span className="material-symbols-outlined">check</span></span>
+                Every device is 100% certified and tested
+              </li>
+              <li>
+                <span className="about-check"><span className="material-symbols-outlined">check</span></span>
+                World-class innovation delivered to your doorstep
+              </li>
+              <li>
+                <span className="about-check"><span className="material-symbols-outlined">check</span></span>
+                Expert support team available 24/7
+              </li>
             </ul>
           </div>
         </div>
@@ -300,11 +326,10 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* ── MODAL — rendered last, outside every section ── */}
+      {/* ── MODAL — always last, outside all sections ── */}
       {selectedProduct && (
         <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
       )}
-
     </PageTransition>
   );
 }

@@ -127,39 +127,41 @@ export default function MyOrders() {
     );
 
     if (orders === 'noauth') return (
-      <div className="state-box">
-        <div className="state-icon">🔒</div>
-        <div className="state-title">You're not logged in</div>
-        <div className="state-desc">Please log in to view your orders</div>
-        <Link to="/login" className="state-btn">Log In</Link>
+      <div className="mo-state">
+        <span className="material-symbols-outlined mo-state-icon">lock</span>
+        <div className="mo-state-title">You're not logged in</div>
+        <div className="mo-state-desc">Please log in to view your orders</div>
+        <Link to="/login" className="mo-state-btn">Log In</Link>
       </div>
     );
 
     if (orders === 'expired') return (
-      <div className="state-box">
-        <div className="state-icon">⏱</div>
-        <div className="state-title">Session expired</div>
-        <div className="state-desc">Please log in again to continue</div>
-        <Link to="/login" className="state-btn">Log In</Link>
+      <div className="mo-state">
+        <span className="material-symbols-outlined mo-state-icon">timer_off</span>
+        <div className="mo-state-title">Session expired</div>
+        <div className="mo-state-desc">Please log in again to continue</div>
+        <Link to="/login" className="mo-state-btn">Log In</Link>
       </div>
     );
 
     if (error) return (
       <>
-        <div className="error-banner">⚠ {error}</div>
-        <div className="state-box">
-          <div className="state-desc">Check your connection and try again</div>
-          <button className="state-btn" onClick={loadMyOrders}>Retry</button>
+        <div className="mo-error-banner">
+          <span className="material-symbols-outlined">error</span> {error}
+        </div>
+        <div className="mo-state">
+          <div className="mo-state-desc">Check your connection and try again</div>
+          <button className="mo-state-btn" onClick={loadMyOrders}>Retry</button>
         </div>
       </>
     );
 
     if (!orders || orders.length === 0) return (
-      <div className="state-box">
-        <div className="state-icon">📦</div>
-        <div className="state-title">No orders yet</div>
-        <div className="state-desc">Your orders will appear here once you make a purchase</div>
-        <Link to="/" className="state-btn">Start Shopping</Link>
+      <div className="mo-state">
+        <span className="material-symbols-outlined mo-state-icon">inventory_2</span>
+        <div className="mo-state-title">No orders yet</div>
+        <div className="mo-state-desc">Your orders will appear here once you make a purchase</div>
+        <Link to="/" className="mo-state-btn">Start Shopping</Link>
       </div>
     );
 
@@ -167,13 +169,16 @@ export default function MyOrders() {
       <>
         {/* Controls */}
         <div className="orders-controls">
-          <input
-            className="orders-search-input"
-            type="text"
-            placeholder="Search by product, category or status…"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
+          <div className="mo-search-wrap">
+            <span className="material-symbols-outlined mo-search-icon">search</span>
+            <input
+              className="orders-search-input"
+              type="text"
+              placeholder="Search by product, category or status…"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+            />
+          </div>
           <select className="orders-sort-select" value={sortBy} onChange={e => setSortBy(e.target.value)}>
             <option value="newest">Newest First</option>
             <option value="oldest">Oldest First</option>
@@ -201,16 +206,16 @@ export default function MyOrders() {
         </div>
 
         {displayedOrders.length === 0 ? (
-          <div className="orders-empty-filter">
-            <div className="emoji">🔍</div>
-            <p>No orders match your filter</p>
-            <small>Try a different status or clear your search</small>
+          <div className="mo-state">
+            <span className="material-symbols-outlined mo-state-icon">search_off</span>
+            <p className="mo-state-title">No orders match your filter</p>
+            <small className="mo-state-desc">Try a different status or clear your search</small>
           </div>
         ) : (
           <div className="orders-list">
             {displayedOrders.map((order, i) => {
               const p = order.productId || {};
-              const img = p.imageUrl ? `${SERVER_URL}/${p.imageUrl.replace(/\\/g, '/')}` : null;
+              const img = p.imageUrl ? `${SERVER_URL}/${p.imageUrl.replace(/\\/g, '/').replace(/^\/+/, '')}` : null;
               const qty = order.quantity || 1;
               const total = ((p.price || 0) * qty).toFixed(2);
               const st = order.status || 'unknown';
@@ -219,33 +224,63 @@ export default function MyOrders() {
                 <div className="order-card" key={order._id || i} style={{ animationDelay: `${i * 50}ms` }}>
                   <div className="card-head">
                     <div className="card-head-left">
+                      <span className="material-symbols-outlined" style={{fontSize:'15px',color:'#f3a81c'}}>receipt_long</span>
                       <span className="card-id-lbl">Order</span>
                       <span className="card-id-val">#{fmtId(order._id || order.id)}</span>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-                      <span className="card-date">{fmtDate(order.createdAt)}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                      <span className="card-date">
+                        <span className="material-symbols-outlined" style={{fontSize:'13px',marginRight:'3px'}}>calendar_today</span>
+                        {fmtDate(order.createdAt)}
+                      </span>
                       <span className={`status-badge ${statusClass(st)}`}>{st}</span>
                     </div>
                   </div>
                   <div className="card-body">
                     <div className="card-img">
-                      {img
-                        ? <img src={img} alt={p.proName || 'Product'} onError={e => { e.target.parentElement.innerHTML = '<div class="card-img-placeholder">📦</div>'; }} />
-                        : <div className="card-img-placeholder">📦</div>}
+                      {img ? (
+                        <>
+                          <img src={img} alt={p.proName || 'Product'}
+                            onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} />
+                          <div className="card-img-placeholder" style={{display:'none'}}>
+                            <span className="material-symbols-outlined">inventory_2</span>
+                          </div>
+                        </>
+                      ) : (
+                        <div className="card-img-placeholder">
+                          <span className="material-symbols-outlined">inventory_2</span>
+                        </div>
+                      )}
                     </div>
                     <div className="card-info">
                       <div className="card-product-name">{p.proName || 'Product Unavailable'}</div>
                       <div className="card-meta">
-                        {p.category && <div className="meta-tag">Category: <b>{p.category}</b></div>}
-                        {p.color && <div className="meta-tag">Color: <b>{p.color}</b></div>}
-                        {p.storage && <div className="meta-tag">Storage: <b>{p.storage}</b></div>}
-                        <div className="meta-tag">Unit: <b>${p.price || 0}</b></div>
+                        {p.category && (
+                          <div className="meta-tag">
+                            <span className="material-symbols-outlined">category</span>{p.category}
+                          </div>
+                        )}
+                        {p.color && (
+                          <div className="meta-tag">
+                            <span className="material-symbols-outlined">palette</span>{p.color}
+                          </div>
+                        )}
+                        {p.storage && (
+                          <div className="meta-tag">
+                            <span className="material-symbols-outlined">hard_drive</span>{p.storage}
+                          </div>
+                        )}
+                        <div className="meta-tag">
+                          <span className="material-symbols-outlined">sell</span>${p.price || 0} / unit
+                        </div>
                       </div>
                     </div>
                     <div className="card-price-block">
                       <div className="card-price-lbl">Total</div>
                       <div className="card-price-val">${total}</div>
-                      <div className="card-qty">Qty: {qty}</div>
+                      <div className="card-qty">
+                        <span className="material-symbols-outlined">layers</span> Qty: {qty}
+                      </div>
                     </div>
                   </div>
                 </div>

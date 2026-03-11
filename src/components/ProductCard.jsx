@@ -2,27 +2,53 @@ import React, { useState } from 'react';
 
 const SERVER_URL = 'https://m-market-2.onrender.com';
 
+// Robust image URL builder — handles backslashes, leading slash, already-full URLs
+function buildImgUrl(imageUrl) {
+  if (!imageUrl) return null;
+  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) return imageUrl;
+  const clean = imageUrl.replace(/\\/g, '/').replace(/^\/+/, '');
+  return `${SERVER_URL}/${clean}`;
+}
+
 export default function ProductCard({ product, onViewDetails, badge }) {
   const [imgError, setImgError] = useState(false);
-  const imgSrc = product.imageUrl
-    ? `${SERVER_URL}/${product.imageUrl.replace(/\\/g, '/').replace(/^\//, '')}`
-    : null;
+  const imgSrc = buildImgUrl(product.imageUrl);
 
   return (
-    <div className="product-card">
-      <div className="product-card-img-wrap">
+    <div className="pc-card">
+      {/* Image */}
+      <div className="pc-img-wrap">
         {imgSrc && !imgError ? (
-          <img src={imgSrc} alt={product.proName} onError={() => setImgError(true)} />
+          <img
+            src={imgSrc}
+            alt={product.proName}
+            className="pc-img"
+            onError={() => setImgError(true)}
+          />
         ) : (
-          <div className="product-card-img-placeholder">📦</div>
+          <div className="pc-img-fallback">
+            <span className="material-symbols-outlined">inventory_2</span>
+          </div>
         )}
-        {badge && <span className="product-card-badge">{badge}</span>}
+        {badge && <span className="pc-badge">{badge}</span>}
       </div>
-      <div className="product-card-body">
-        <h3>{product.proName}</h3>
-        {product.category && <span className="product-card-category">{product.category}</span>}
-        <div className="product-price">${product.price?.toLocaleString()}</div>
-        <button className="order-btn" onClick={() => onViewDetails(product._id || product.id)}>
+
+      {/* Body */}
+      <div className="pc-body">
+        {product.category && (
+          <div className="pc-category">
+            <span className="material-symbols-outlined">category</span>
+            {product.category}
+          </div>
+        )}
+        <h3 className="pc-name">{product.proName}</h3>
+        <div className="pc-price">${product.price?.toLocaleString()}</div>
+
+        <button
+          className="pc-btn"
+          onClick={() => onViewDetails(product._id || product.id)}
+        >
+          <span className="material-symbols-outlined">visibility</span>
           View Details
         </button>
       </div>
