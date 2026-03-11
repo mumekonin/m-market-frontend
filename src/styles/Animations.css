@@ -1,0 +1,287 @@
+/* ── PAGE TRANSITION WRAPPER ── */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-12px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* ── SKELETON LOADER ── */
+.skeleton {
+  background: linear-gradient(90deg, #e8edf5 25%, #f4f7fb 50%, #e8edf5 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Skeleton product card */
+.skeleton-card {
+  background: #fff;
+  border: 1px solid #edf2f7;
+  border-radius: 12px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.skeleton-img   { width: 100%; height: 180px; }
+.skeleton-title { height: 16px; width: 75%; }
+.skeleton-sub   { height: 13px; width: 50%; }
+.skeleton-price { height: 28px; width: 40%; margin-top: 4px; }
+.skeleton-btn   { height: 42px; width: 100%; margin-top: 8px; border-radius: 8px; }
+
+/* Skeleton order card */
+.skeleton-order {
+  background: #fff;
+  border: 1px solid #e8edf5;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+}
+.skeleton-order-head {
+  padding: 14px 22px;
+  background: #f8faff;
+  border-bottom: 1px solid #e8edf5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.skeleton-order-body {
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.skeleton-order-img { width: 88px; height: 88px; flex-shrink: 0; border-radius: 12px; }
+.skeleton-order-info { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.skeleton-order-price { width: 110px; height: 80px; border-radius: 12px; flex-shrink: 0; }
+
+/* ── TOAST NOTIFICATION ── */
+.toast-container {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+  pointer-events: none;
+}
+.toast-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 18px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  animation: toastIn 0.35s cubic-bezier(0.175,0.885,0.32,1.275) both;
+  pointer-events: all;
+  min-width: 220px;
+  max-width: 340px;
+}
+.toast-item.exiting {
+  animation: toastOut 0.3s ease forwards;
+}
+.toast-success { background: linear-gradient(135deg, #22c55e, #16a34a); }
+.toast-error   { background: linear-gradient(135deg, #ef4444, #dc2626); }
+.toast-info    { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.toast-icon    { font-size: 16px; flex-shrink: 0; }
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(60px) scale(0.9); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes toastOut {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to   { opacity: 0; transform: translateX(60px) scale(0.9); }
+}
+
+/* ── SORT & FILTER BAR (My Orders) ── */
+.orders-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.orders-search-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 16px 10px 40px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' fill='none' stroke='%23aaa' stroke-width='2' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat 12px center;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  color: #1a1a1a;
+}
+.orders-search-input:focus {
+  border-color: #f3a81c;
+  box-shadow: 0 0 0 3px rgba(243,168,28,0.12);
+}
+.orders-sort-select {
+  padding: 10px 36px 10px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.orders-sort-select:focus { border-color: #f3a81c; }
+
+.filter-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.filter-chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid #e2e8f0;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-chip:hover { border-color: #f3a81c; color: #f3a81c; }
+.filter-chip.active { background: #f3a81c; border-color: #f3a81c; color: #000; }
+.filter-chip.active-shipped { background: #7c3aed; border-color: #7c3aed; color: #fff; }
+.filter-chip.active-paid { background: #16a34a; border-color: #16a34a; color: #fff; }
+.filter-chip.active-cancelled { background: #dc2626; border-color: #dc2626; color: #fff; }
+
+.orders-empty-filter {
+  text-align: center;
+  padding: 50px 20px;
+  color: #94a3b8;
+}
+.orders-empty-filter .emoji { font-size: 40px; margin-bottom: 12px; }
+.orders-empty-filter p { font-size: 15px; font-weight: 600; color: #374151; margin-bottom: 6px; }
+.orders-empty-filter small { font-size: 13px; }
+.orders-count {
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+/* ── BUTTON RIPPLE EFFECT ── */
+.ripple-btn {
+  position: relative;
+  overflow: hidden;
+}
+.ripple-btn::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  width: 0; height: 0;
+  background: rgba(255,255,255,0.35);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+  opacity: 1;
+}
+.ripple-btn:active::after {
+  width: 200px; height: 200px;
+  opacity: 0;
+}
+
+/* ── AUTH FORM ANIMATIONS ── */
+.form-inner {
+  animation: formSlideUp 0.4s cubic-bezier(0.175,0.885,0.32,1.275) both;
+}
+@keyframes formSlideUp {
+  from { opacity: 0; transform: translateY(24px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Input shake on error */
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-8px); }
+  40%      { transform: translateX(8px); }
+  60%      { transform: translateX(-5px); }
+  80%      { transform: translateX(5px); }
+}
+.input-shake { animation: shake 0.4s ease; }
+
+/* ── LOADING SPINNER OVERLAY ── */
+.btn-loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+.btn-loading::after {
+  content: '';
+  position: absolute;
+  width: 16px; height: 16px;
+  top: 50%; left: 50%;
+  margin: -8px 0 0 -8px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── FADE IN UP for product cards ── */
+.fade-in-up {
+  animation: fadeInUp 0.4s ease both;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── HERO ENTRANCE ── */
+.hero-content {
+  animation: heroLeft 0.7s cubic-bezier(0.175,0.885,0.32,1.275) both;
+}
+.hero-image {
+  animation: heroRight 0.7s cubic-bezier(0.175,0.885,0.32,1.275) 0.15s both;
+}
+@keyframes heroLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes heroRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
