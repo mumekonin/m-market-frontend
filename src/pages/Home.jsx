@@ -377,8 +377,6 @@ export default function Home() {
                 <li><a href="#about">About Us</a></li>
                 <li><a href="#about">Our Story</a></li>
                 <li><a href="#footer">Contact</a></li>
-                <li><a href="#footer">Careers</a></li>
-                <li><a href="#footer">Press</a></li>
               </ul>
             </div>
 
@@ -387,7 +385,6 @@ export default function Home() {
               <h4 className="fcol-title">Support</h4>
               <ul className="fcol-links">
                 <li><a href="#footer">Help Center</a></li>
-                <li><a href="#footer">Shipping Policy</a></li>
                 <li><a href="#footer">Returns & Refunds</a></li>
                 <li><a href="#footer">Track My Order</a></li>
                 <li><a href="#footer">Privacy Policy</a></li>
@@ -405,15 +402,15 @@ export default function Home() {
                 </li>
                 <li>
                   <span className="material-symbols-outlined">call</span>
-                  <a href="tel:+1234567890">+1 (234) 567-890</a>
+                  <a href="tel:+1234567890">+1(219)05408989</a>
                 </li>
                 <li>
                   <span className="material-symbols-outlined">location_on</span>
-                  <span>123 Tech Street,<br/>Silicon Valley, CA</span>
+                  <span>JIMMA,<br/>merckato Abba jiffar buliding, CA</span>
                 </li>
                 <li>
                   <span className="material-symbols-outlined">schedule</span>
-                  <span>Mon–Sat: 9am – 8pm</span>
+                  <span>Mon–Sat: 2am – 2pm LT</span>
                 </li>
               </ul>
             </div>
