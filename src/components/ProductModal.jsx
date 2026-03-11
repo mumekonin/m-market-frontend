@@ -10,13 +10,13 @@ function buildImgUrl(imageUrl) {
 }
 
 export default function ProductModal({ product, onClose }) {
-  const [step,       setStep]       = useState('detail'); // 'detail' | 'order' | 'success'
-  const [qty,        setQty]        = useState(1);
+  const [step, setStep] = useState('detail'); // 'detail' | 'order' | 'success'
+  const [qty, setQty] = useState(1);
   const [screenshot, setScreenshot] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [imgError,   setImgError]   = useState(false);
+  const [imgError, setImgError] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [errorMsg,   setErrorMsg]   = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   // ESC to close
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function ProductModal({ product, onClose }) {
   if (!product) return null;
 
   const imgSrc = buildImgUrl(product.imageUrl);
-  const total  = ((product.price || 0) * qty).toLocaleString();
+  const total = ((product.price || 0) * qty).toLocaleString();
 
   function handleFileChange(e) {
     const file = e.target.files[0];
@@ -40,20 +40,20 @@ export default function ProductModal({ product, onClose }) {
 
   async function handleConfirm() {
     const token = localStorage.getItem('userToken');
-    if (!token)      { setErrorMsg('You must be logged in to place an order.'); return; }
+    if (!token) { setErrorMsg('You must be logged in to place an order.'); return; }
     if (!screenshot) { setErrorMsg('Please upload your payment screenshot.'); return; }
     setErrorMsg('');
     setSubmitting(true);
     try {
       const fd = new FormData();
       fd.append('productId', product._id || product.id);
-      fd.append('quantity',  qty);
-      fd.append('image',     screenshot);
+      fd.append('quantity', qty);
+      fd.append('image', screenshot);
 
       const res = await fetch(`${SERVER_URL}/orders/create-order`, {
-        method:  'POST',
+        method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
-        body:    fd,
+        body: fd,
       });
 
       if (res.ok) {

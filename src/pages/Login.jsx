@@ -40,7 +40,7 @@ export default function Login() {
           try {
             const payload = JSON.parse(atob(token.split('.')[1]));
             role = payload.role || payload.Role || null;
-          } catch {}
+          } catch { }
         }
 
         setTimeout(() => {

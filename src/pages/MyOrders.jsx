@@ -122,7 +122,7 @@ export default function MyOrders() {
   const renderContent = () => {
     if (loading) return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        {[1,2,3].map(i => <SkeletonOrderCard key={i} />)}
+        {[1, 2, 3].map(i => <SkeletonOrderCard key={i} />)}
       </div>
     );
 
@@ -224,13 +224,13 @@ export default function MyOrders() {
                 <div className="order-card" key={order._id || i} style={{ animationDelay: `${i * 50}ms` }}>
                   <div className="card-head">
                     <div className="card-head-left">
-                      <span className="material-symbols-outlined" style={{fontSize:'15px',color:'#f3a81c'}}>receipt_long</span>
+                      <span className="material-symbols-outlined" style={{ fontSize: '15px', color: '#f3a81c' }}>receipt_long</span>
                       <span className="card-id-lbl">Order</span>
                       <span className="card-id-val">#{fmtId(order._id || order.id)}</span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                       <span className="card-date">
-                        <span className="material-symbols-outlined" style={{fontSize:'13px',marginRight:'3px'}}>calendar_today</span>
+                        <span className="material-symbols-outlined" style={{ fontSize: '13px', marginRight: '3px' }}>calendar_today</span>
                         {fmtDate(order.createdAt)}
                       </span>
                       <span className={`status-badge ${statusClass(st)}`}>{st}</span>
@@ -241,8 +241,8 @@ export default function MyOrders() {
                       {img ? (
                         <>
                           <img src={img} alt={p.proName || 'Product'}
-                            onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} />
-                          <div className="card-img-placeholder" style={{display:'none'}}>
+                            onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
+                          <div className="card-img-placeholder" style={{ display: 'none' }}>
                             <span className="material-symbols-outlined">inventory_2</span>
                           </div>
                         </>
@@ -333,8 +333,8 @@ export default function MyOrders() {
               </div>
               <button className="refresh-btn" onClick={loadMyOrders} title="Refresh">
                 <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                  <polyline points="23 4 23 10 17 10"/>
-                  <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>
+                  <polyline points="23 4 23 10 17 10" />
+                  <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10" />
                 </svg>
               </button>
             </div>

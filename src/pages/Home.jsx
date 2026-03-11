@@ -9,19 +9,19 @@ import '../styles/Home.css';
 const SERVER_URL = 'https://m-market-2.onrender.com';
 
 const COMING_SOON = [
-  { name: 'Sonic Pro G2',    desc: 'Immersive 360° Wireless Sound',  price: '$299',   img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80' },
-  { name: 'Lumina 4K Laser', desc: 'Ultra Short Throw Home Cinema',  price: '$1,499', img: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&q=80' },
-  { name: 'Aura ANC Pro',    desc: 'Pure Silence, Pure Sound',       price: '$349',   img: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&q=80' },
-  { name: 'ProShot X4',      desc: 'Professional DSLR Excellence',   price: '$1,199', img: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&q=80' },
-  { name: 'Nexus Home Hub',  desc: 'The Heart of Your Smart Home',   price: '$199',   img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80' },
+  { name: 'Sonic Pro G2', desc: 'Immersive 360° Wireless Sound', price: '$299', img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80' },
+  { name: 'Lumina 4K Laser', desc: 'Ultra Short Throw Home Cinema', price: '$1,499', img: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&q=80' },
+  { name: 'Aura ANC Pro', desc: 'Pure Silence, Pure Sound', price: '$349', img: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&q=80' },
+  { name: 'ProShot X4', desc: 'Professional DSLR Excellence', price: '$1,199', img: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&q=80' },
+  { name: 'Nexus Home Hub', desc: 'The Heart of Your Smart Home', price: '$199', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80' },
 ];
 
 const CATEGORIES = [
-  { key: 'phone',   label: 'Smartphones', icon: 'smartphone' },
-  { key: 'laptop',  label: 'Laptops',     icon: 'laptop' },
-  { key: 'ipad',    label: 'Tablets',     icon: 'tablet' },
-  { key: 'AirPods', label: 'AirPods',     icon: 'headphones' },
-  { key: 'watch',   label: 'Watches',     icon: 'watch' },
+  { key: 'phone', label: 'Smartphones', icon: 'smartphone' },
+  { key: 'laptop', label: 'Laptops', icon: 'laptop' },
+  { key: 'ipad', label: 'Tablets', icon: 'tablet' },
+  { key: 'AirPods', label: 'AirPods', icon: 'headphones' },
+  { key: 'watch', label: 'Watches', icon: 'watch' },
 ];
 
 function useReveal() {
@@ -36,15 +36,15 @@ function useReveal() {
 }
 
 export default function Home() {
-  const [products,        setProducts]        = useState([]);
+  const [products, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
-  const [searchQuery,     setSearchQuery]     = useState('');
-  const [searchResults,   setSearchResults]   = useState([]);
-  const [searchLoading,   setSearchLoading]   = useState(false);
-  const [searchMsg,       setSearchMsg]       = useState('');
-  const [catResults,      setCatResults]      = useState([]);
-  const [catLoading,      setCatLoading]      = useState(false);
-  const [activeCategory,  setActiveCategory]  = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [searchMsg, setSearchMsg] = useState('');
+  const [catResults, setCatResults] = useState([]);
+  const [catLoading, setCatLoading] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   useReveal();
@@ -53,19 +53,19 @@ export default function Home() {
   async function fetchProducts() {
     setLoadingProducts(true);
     try {
-      const res  = await fetch(`${SERVER_URL}/products/get-all-products`);
+      const res = await fetch(`${SERVER_URL}/products/get-all-products`);
       const data = await res.json();
       setProducts(Array.isArray(data) ? data : []);
     } catch { setProducts([]); }
-    finally  { setLoadingProducts(false); }
+    finally { setLoadingProducts(false); }
   }
 
   async function openProduct(id) {
     try {
-      const res     = await fetch(`${SERVER_URL}/products/get-product-detail/${id}`);
+      const res = await fetch(`${SERVER_URL}/products/get-product-detail/${id}`);
       const product = await res.json();
       setSelectedProduct(product);
-    } catch {}
+    } catch { }
   }
 
   async function doSearch() {
@@ -74,13 +74,13 @@ export default function Home() {
     setSearchLoading(true);
     setSearchMsg('');
     try {
-      const res  = await fetch(`${SERVER_URL}/products/search-products?key=${encodeURIComponent(q)}`);
+      const res = await fetch(`${SERVER_URL}/products/search-products?key=${encodeURIComponent(q)}`);
       const data = await res.json();
       if (!res.ok) { setSearchMsg(data.message || 'Error'); setSearchResults([]); return; }
       setSearchResults(Array.isArray(data) ? data : []);
       if (!data.length) setSearchMsg(`No products found for "${q}"`);
     } catch { setSearchMsg('Connection error. Please try again.'); }
-    finally  { setSearchLoading(false); }
+    finally { setSearchLoading(false); }
   }
 
   async function filterCategory(key) {
@@ -88,10 +88,10 @@ export default function Home() {
     setCatLoading(true);
     setCatResults([]);
     try {
-      const res  = await fetch(`${SERVER_URL}/products/search-products?key=${encodeURIComponent(key)}`);
+      const res = await fetch(`${SERVER_URL}/products/search-products?key=${encodeURIComponent(key)}`);
       const data = await res.json();
       setCatResults(Array.isArray(data) ? data : []);
-    } catch {}
+    } catch { }
     finally { setCatLoading(false); }
   }
 
@@ -188,7 +188,7 @@ export default function Home() {
           </div>
           {searchMsg && <p className="search-msg">{searchMsg}</p>}
           {searchLoading && (
-            <div className="product-grid">{[1,2,3,4].map(i => <SkeletonProductCard key={i} />)}</div>
+            <div className="product-grid">{[1, 2, 3, 4].map(i => <SkeletonProductCard key={i} />)}</div>
           )}
           {!searchLoading && searchResults.length > 0 && (
             <>
@@ -214,7 +214,7 @@ export default function Home() {
             <p className="section-sub">Our latest collection of high-performance gadgets.</p>
           </div>
           {loadingProducts ? (
-            <div className="product-grid">{[1,2,3,4,5,6,7,8].map(i => <SkeletonProductCard key={i} />)}</div>
+            <div className="product-grid">{[1, 2, 3, 4, 5, 6, 7, 8].map(i => <SkeletonProductCard key={i} />)}</div>
           ) : products.length === 0 ? (
             <div className="empty-state">
               <span className="material-symbols-outlined" style={{ fontSize: '48px', color: '#333', display: 'block', marginBottom: '14px' }}>inventory_2</span>
@@ -255,7 +255,7 @@ export default function Home() {
             )}
           </div>
           {catLoading && (
-            <div className="product-grid">{[1,2,3,4].map(i => <SkeletonProductCard key={i} />)}</div>
+            <div className="product-grid">{[1, 2, 3, 4].map(i => <SkeletonProductCard key={i} />)}</div>
           )}
           {!catLoading && catResults.length > 0 && (
             <>

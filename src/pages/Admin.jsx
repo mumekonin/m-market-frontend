@@ -359,7 +359,7 @@ function formatBytes(b) {
 }
 
 function escHtml(str) {
-  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 function getToken() { return localStorage.getItem('userToken') || ''; }
@@ -390,10 +390,10 @@ function ProductRow({ p, onCopy }) {
       <td>
         {imgSrc ? (
           <img className="product-img" src={imgSrc} alt={p.proName}
-            onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='grid'; }} />
+            onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'grid'; }} />
         ) : null}
-        <div className="img-placeholder" style={{display: imgSrc ? 'none' : 'grid'}}>
-          <span className="material-symbols-outlined" style={{fontSize:'20px'}}>inventory_2</span>
+        <div className="img-placeholder" style={{ display: imgSrc ? 'none' : 'grid' }}>
+          <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>inventory_2</span>
         </div>
       </td>
       <td><div className="product-name">{p.proName}</div><div className="product-desc">{p.proDescrption}</div></td>
@@ -425,33 +425,33 @@ export default function Admin() {
   const [productStatus, setProductStatus] = useState({ type: '', msg: '' });
 
   // Upload state
-  const [uploadFields, setUploadFields] = useState({ proName:'', proDescrption:'', price:'', stock:'', category:'', color:'', storage:'' });
+  const [uploadFields, setUploadFields] = useState({ proName: '', proDescrption: '', price: '', stock: '', category: '', color: '', storage: '' });
   const [uploadFile, setUploadFile] = useState(null);
   const [uploadPreview, setUploadPreview] = useState('');
-  const [uploadStatus, setUploadStatus] = useState({ type:'', msg:'' });
+  const [uploadStatus, setUploadStatus] = useState({ type: '', msg: '' });
 
   // Update state
   const [updateId, setUpdateId] = useState('');
-  const [updateFields, setUpdateFields] = useState({ proName:'', proDescrption:'', price:'', stock:'', category:'', color:'', storage:'' });
+  const [updateFields, setUpdateFields] = useState({ proName: '', proDescrption: '', price: '', stock: '', category: '', color: '', storage: '' });
   const [updateFile, setUpdateFile] = useState(null);
   const [updatePreview, setUpdatePreview] = useState('');
-  const [updateStatus, setUpdateStatus] = useState({ type:'', msg:'' });
+  const [updateStatus, setUpdateStatus] = useState({ type: '', msg: '' });
 
   // Delete state
   const [deleteId, setDeleteId] = useState('');
-  const [deleteStatus, setDeleteStatus] = useState({ type:'', msg:'' });
+  const [deleteStatus, setDeleteStatus] = useState({ type: '', msg: '' });
   const [confirmModal, setConfirmModal] = useState(false);
 
   // Orders state
   const [allOrders, setAllOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [orderSearch, setOrderSearch] = useState('');
-  const [orderStatus, setOrderStatus] = useState({ type:'', msg:'' });
+  const [orderStatus, setOrderStatus] = useState({ type: '', msg: '' });
 
   // Update order status
   const [orderStatusId, setOrderStatusId] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
-  const [orderStatusMsg, setOrderStatusMsg] = useState({ type:'', msg:'' });
+  const [orderStatusMsg, setOrderStatusMsg] = useState({ type: '', msg: '' });
 
   useEffect(() => {
     // Inject fonts
@@ -512,8 +512,8 @@ export default function Admin() {
   function filterProducts(q) {
     setProductSearch(q);
     const filtered = allProducts.filter(p =>
-      (p.proName||'').toLowerCase().includes(q.toLowerCase()) ||
-      (p.category||'').toLowerCase().includes(q.toLowerCase())
+      (p.proName || '').toLowerCase().includes(q.toLowerCase()) ||
+      (p.category || '').toLowerCase().includes(q.toLowerCase())
     );
     setFilteredProducts(filtered);
   }
@@ -555,7 +555,7 @@ export default function Admin() {
         const name = data.product?.proName || data.proName || proName;
         setUploadStatus({ type: 'success', msg: `✓ Product uploaded successfully! — ${name}` });
         showToast('Product uploaded!');
-        setUploadFields({ proName:'', proDescrption:'', price:'', stock:'', category:'', color:'', storage:'' });
+        setUploadFields({ proName: '', proDescrption: '', price: '', stock: '', category: '', color: '', storage: '' });
         setUploadFile(null); setUploadPreview('');
       } else {
         setUploadStatus({ type: 'error', msg: '✕ ' + (data.message || 'Upload failed.') });
@@ -663,18 +663,18 @@ export default function Admin() {
   const productStats = { total: allProducts.length, categories: new Set(allProducts.map(p => p.category)).size, stock: allProducts.reduce((s, p) => s + (Number(p.stock) || 0), 0) };
   const orderStats = {
     total: allOrders.length,
-    pending: allOrders.filter(o => (o.status||'').toLowerCase() === 'pending').length,
-    completed: allOrders.filter(o => ['paid','completed'].includes((o.status||'').toLowerCase())).length,
+    pending: allOrders.filter(o => (o.status || '').toLowerCase() === 'pending').length,
+    completed: allOrders.filter(o => ['paid', 'completed'].includes((o.status || '').toLowerCase())).length,
     revenue: allOrders.reduce((s, o) => s + ((o.productId?.price || 0) * (o.quantity || 1)), 0)
   };
 
   const navItems = [
-    { id: 'products',    label: 'All Products',         section: 'Products', icon: 'inventory_2' },
-    { id: 'upload',      label: 'Upload Product',        section: 'Products', icon: 'upload' },
-    { id: 'update',      label: 'Update Product',        section: 'Products', icon: 'edit' },
-    { id: 'delete',      label: 'Delete Product',        section: 'Products', icon: 'delete' },
-    { id: 'orders',      label: 'All Orders',            section: 'Orders',   icon: 'receipt_long' },
-    { id: 'updateOrder', label: 'Update Order Status',   section: 'Orders',   icon: 'published_with_changes' },
+    { id: 'products', label: 'All Products', section: 'Products', icon: 'inventory_2' },
+    { id: 'upload', label: 'Upload Product', section: 'Products', icon: 'upload' },
+    { id: 'update', label: 'Update Product', section: 'Products', icon: 'edit' },
+    { id: 'delete', label: 'Delete Product', section: 'Products', icon: 'delete' },
+    { id: 'orders', label: 'All Orders', section: 'Orders', icon: 'receipt_long' },
+    { id: 'updateOrder', label: 'Update Order Status', section: 'Orders', icon: 'published_with_changes' },
   ];
 
   return (
@@ -718,7 +718,7 @@ export default function Admin() {
 
           <div className="sidebar-footer">
             <div className="admin-dot"></div>
-            <span style={{fontSize:'11px',color:'#444',fontWeight:600}}>Admin</span>
+            <span style={{ fontSize: '11px', color: '#444', fontWeight: 600 }}>Admin</span>
             <Link to="/" className="store-link">← Store</Link>
           </div>
         </aside>
@@ -743,7 +743,7 @@ export default function Admin() {
             )}
             {filteredProducts.length > 0 && (
               <div className="search-bar">
-                <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
                 <input type="text" placeholder="Search by name or category…" value={productSearch} onChange={e => filterProducts(e.target.value)} />
               </div>
             )}
@@ -767,10 +767,10 @@ export default function Admin() {
             </div>
             <div className="card">
               <div className="form-row two">
-                <div className="form-group"><label>Product Name <span className="req">*</span></label><input type="text" placeholder="e.g. iPhone 15 Pro" value={uploadFields.proName} onChange={e => setUploadFields(p => ({...p, proName: e.target.value}))} /></div>
+                <div className="form-group"><label>Product Name <span className="req">*</span></label><input type="text" placeholder="e.g. iPhone 15 Pro" value={uploadFields.proName} onChange={e => setUploadFields(p => ({ ...p, proName: e.target.value }))} /></div>
                 <div className="form-group">
                   <label>Category <span className="req">*</span></label>
-                  <select value={uploadFields.category} onChange={e => setUploadFields(p => ({...p, category: e.target.value}))}>
+                  <select value={uploadFields.category} onChange={e => setUploadFields(p => ({ ...p, category: e.target.value }))}>
                     <option value="">Select category…</option>
                     <option value="phone">Phone</option>
                     <option value="laptop">Laptop</option>
@@ -780,18 +780,18 @@ export default function Admin() {
                   </select>
                 </div>
               </div>
-              <div className="form-group"><label>Description <span className="req">*</span></label><textarea placeholder="Describe the product…" value={uploadFields.proDescrption} onChange={e => setUploadFields(p => ({...p, proDescrption: e.target.value}))} /></div>
+              <div className="form-group"><label>Description <span className="req">*</span></label><textarea placeholder="Describe the product…" value={uploadFields.proDescrption} onChange={e => setUploadFields(p => ({ ...p, proDescrption: e.target.value }))} /></div>
               <div className="form-row four">
-                <div className="form-group"><label>Price (USD) <span className="req">*</span></label><input type="number" placeholder="0.00" value={uploadFields.price} onChange={e => setUploadFields(p => ({...p, price: e.target.value}))} /></div>
-                <div className="form-group"><label>Stock <span className="req">*</span></label><input type="number" placeholder="0" value={uploadFields.stock} onChange={e => setUploadFields(p => ({...p, stock: e.target.value}))} /></div>
-                <div className="form-group"><label>Color</label><input type="text" placeholder="Black, White…" value={uploadFields.color} onChange={e => setUploadFields(p => ({...p, color: e.target.value}))} /></div>
-                <div className="form-group"><label>Storage</label><input type="text" placeholder="128GB…" value={uploadFields.storage} onChange={e => setUploadFields(p => ({...p, storage: e.target.value}))} /></div>
+                <div className="form-group"><label>Price (USD) <span className="req">*</span></label><input type="number" placeholder="0.00" value={uploadFields.price} onChange={e => setUploadFields(p => ({ ...p, price: e.target.value }))} /></div>
+                <div className="form-group"><label>Stock <span className="req">*</span></label><input type="number" placeholder="0" value={uploadFields.stock} onChange={e => setUploadFields(p => ({ ...p, stock: e.target.value }))} /></div>
+                <div className="form-group"><label>Color</label><input type="text" placeholder="Black, White…" value={uploadFields.color} onChange={e => setUploadFields(p => ({ ...p, color: e.target.value }))} /></div>
+                <div className="form-group"><label>Storage</label><input type="text" placeholder="128GB…" value={uploadFields.storage} onChange={e => setUploadFields(p => ({ ...p, storage: e.target.value }))} /></div>
               </div>
               <div className="form-group">
                 <label>Product Image <span className="req">*</span></label>
                 {!uploadFile ? (
                   <div className="upload-zone" onClick={() => document.getElementById('uploadFileInput').click()}>
-                    <input type="file" id="uploadFileInput" accept="image/*" style={{display:'none'}} onChange={e => e.target.files[0] && handleUploadFile(e.target.files[0])} />
+                    <input type="file" id="uploadFileInput" accept="image/*" style={{ display: 'none' }} onChange={e => e.target.files[0] && handleUploadFile(e.target.files[0])} />
                     <p>Click to upload or drag & drop</p><small>PNG, JPG, WEBP — max 10MB</small>
                   </div>
                 ) : (
@@ -804,7 +804,7 @@ export default function Admin() {
               </div>
               <StatusMsg status={uploadStatus} />
               <div className="form-actions">
-                <button className="btn btn-ghost" onClick={() => { setUploadFields({ proName:'',proDescrption:'',price:'',stock:'',category:'',color:'',storage:'' }); setUploadFile(null); setUploadPreview(''); setUploadStatus({type:'',msg:''}); }}>Clear</button>
+                <button className="btn btn-ghost" onClick={() => { setUploadFields({ proName: '', proDescrption: '', price: '', stock: '', category: '', color: '', storage: '' }); setUploadFile(null); setUploadPreview(''); setUploadStatus({ type: '', msg: '' }); }}>Clear</button>
                 <button className="btn btn-primary" onClick={submitUpload}>↑ Upload Product</button>
               </div>
             </div>
@@ -820,15 +820,15 @@ export default function Admin() {
                 <label>Product ID <span className="req">*</span></label>
                 <div className="input-with-btn">
                   <input type="text" placeholder="Paste MongoDB ObjectId…" value={updateId} onChange={e => setUpdateId(e.target.value)} />
-                  <button className="btn btn-ghost" onClick={() => navigator.clipboard.readText().then(t => setUpdateId(t.trim())).catch(()=>{})}>Paste</button>
+                  <button className="btn btn-ghost" onClick={() => navigator.clipboard.readText().then(t => setUpdateId(t.trim())).catch(() => { })}>Paste</button>
                 </div>
               </div>
               <div className="section-divider"><span>Fields to update — leave blank to keep existing value</span></div>
               <div className="form-row two">
-                <div className="form-group"><label>Product Name</label><input type="text" placeholder="Leave blank to keep current" value={updateFields.proName} onChange={e => setUpdateFields(p => ({...p, proName: e.target.value}))} /></div>
+                <div className="form-group"><label>Product Name</label><input type="text" placeholder="Leave blank to keep current" value={updateFields.proName} onChange={e => setUpdateFields(p => ({ ...p, proName: e.target.value }))} /></div>
                 <div className="form-group">
                   <label>Category</label>
-                  <select value={updateFields.category} onChange={e => setUpdateFields(p => ({...p, category: e.target.value}))}>
+                  <select value={updateFields.category} onChange={e => setUpdateFields(p => ({ ...p, category: e.target.value }))}>
                     <option value="">— Keep current —</option>
                     <option value="phone">Phone</option>
                     <option value="laptop">Laptop</option>
@@ -838,18 +838,18 @@ export default function Admin() {
                   </select>
                 </div>
               </div>
-              <div className="form-group"><label>Description</label><textarea placeholder="Leave blank to keep current" value={updateFields.proDescrption} onChange={e => setUpdateFields(p => ({...p, proDescrption: e.target.value}))} /></div>
+              <div className="form-group"><label>Description</label><textarea placeholder="Leave blank to keep current" value={updateFields.proDescrption} onChange={e => setUpdateFields(p => ({ ...p, proDescrption: e.target.value }))} /></div>
               <div className="form-row four">
-                <div className="form-group"><label>Price</label><input type="number" placeholder="e.g. 999.00" value={updateFields.price} onChange={e => setUpdateFields(p => ({...p, price: e.target.value}))} /></div>
-                <div className="form-group"><label>Stock</label><input type="number" placeholder="e.g. 50" value={updateFields.stock} onChange={e => setUpdateFields(p => ({...p, stock: e.target.value}))} /></div>
-                <div className="form-group"><label>Color</label><input type="text" placeholder="e.g. Black" value={updateFields.color} onChange={e => setUpdateFields(p => ({...p, color: e.target.value}))} /></div>
-                <div className="form-group"><label>Storage</label><input type="text" placeholder="e.g. 256GB" value={updateFields.storage} onChange={e => setUpdateFields(p => ({...p, storage: e.target.value}))} /></div>
+                <div className="form-group"><label>Price</label><input type="number" placeholder="e.g. 999.00" value={updateFields.price} onChange={e => setUpdateFields(p => ({ ...p, price: e.target.value }))} /></div>
+                <div className="form-group"><label>Stock</label><input type="number" placeholder="e.g. 50" value={updateFields.stock} onChange={e => setUpdateFields(p => ({ ...p, stock: e.target.value }))} /></div>
+                <div className="form-group"><label>Color</label><input type="text" placeholder="e.g. Black" value={updateFields.color} onChange={e => setUpdateFields(p => ({ ...p, color: e.target.value }))} /></div>
+                <div className="form-group"><label>Storage</label><input type="text" placeholder="e.g. 256GB" value={updateFields.storage} onChange={e => setUpdateFields(p => ({ ...p, storage: e.target.value }))} /></div>
               </div>
               <div className="form-group">
                 <label>Replace Image <span className="optional">(optional)</span></label>
                 {!updateFile ? (
                   <div className="upload-zone" onClick={() => document.getElementById('updateFileInput').click()}>
-                    <input type="file" id="updateFileInput" accept="image/*" style={{display:'none'}} onChange={e => { if (e.target.files[0]) { const f = e.target.files[0]; const r = new FileReader(); r.onload = ev => setUpdatePreview(ev.target.result); r.readAsDataURL(f); setUpdateFile(f); } }} />
+                    <input type="file" id="updateFileInput" accept="image/*" style={{ display: 'none' }} onChange={e => { if (e.target.files[0]) { const f = e.target.files[0]; const r = new FileReader(); r.onload = ev => setUpdatePreview(ev.target.result); r.readAsDataURL(f); setUpdateFile(f); } }} />
                     <p>Click to upload new image</p><small>Leave empty to keep existing image</small>
                   </div>
                 ) : (
@@ -862,7 +862,7 @@ export default function Admin() {
               </div>
               <StatusMsg status={updateStatus} />
               <div className="form-actions">
-                <button className="btn btn-ghost" onClick={() => { setUpdateId(''); setUpdateFields({proName:'',proDescrption:'',price:'',stock:'',category:'',color:'',storage:''}); setUpdateFile(null); setUpdatePreview(''); setUpdateStatus({type:'',msg:''}); }}>Clear</button>
+                <button className="btn btn-ghost" onClick={() => { setUpdateId(''); setUpdateFields({ proName: '', proDescrption: '', price: '', stock: '', category: '', color: '', storage: '' }); setUpdateFile(null); setUpdatePreview(''); setUpdateStatus({ type: '', msg: '' }); }}>Clear</button>
                 <button className="btn btn-warning" onClick={submitUpdate}>✎ Save Changes</button>
               </div>
             </div>
@@ -878,15 +878,15 @@ export default function Admin() {
                 <label>Product ID <span className="req">*</span></label>
                 <div className="input-with-btn">
                   <input type="text" placeholder="Paste MongoDB ObjectId here…" value={deleteId} onChange={e => setDeleteId(e.target.value)} />
-                  <button className="btn btn-ghost" onClick={() => navigator.clipboard.readText().then(t => setDeleteId(t.trim())).catch(()=>{})}>Paste</button>
+                  <button className="btn btn-ghost" onClick={() => navigator.clipboard.readText().then(t => setDeleteId(t.trim())).catch(() => { })}>Paste</button>
                 </div>
               </div>
               <div className="alert alert-warning">
-                <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
                 This action is <strong>permanent</strong>. The product record and its image will be deleted from storage.
               </div>
               <div className="form-actions">
-                <button className="btn btn-danger" onClick={() => { if (!deleteId.trim()) { setDeleteStatus({type:'error',msg:'✕ Please enter a Product ID.'}); return; } setConfirmModal(true); }}>🗑 Delete Product</button>
+                <button className="btn btn-danger" onClick={() => { if (!deleteId.trim()) { setDeleteStatus({ type: 'error', msg: '✕ Please enter a Product ID.' }); return; } setConfirmModal(true); }}>🗑 Delete Product</button>
               </div>
               <StatusMsg status={deleteStatus} />
             </div>
@@ -911,7 +911,7 @@ export default function Admin() {
             )}
             {filteredOrders.length > 0 && (
               <div className="search-bar">
-                <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
                 <input type="text" placeholder="Search by customer name, email or product…" value={orderSearch} onChange={e => filterOrders(e.target.value)} />
               </div>
             )}
@@ -927,9 +927,9 @@ export default function Admin() {
                       const status = (order.status || 'pending').toLowerCase();
                       const qty = order.quantity || 1;
                       const total = ((product.price || 0) * qty).toFixed(2);
-                      const date = order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—';
+                      const date = order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
                       const orderId = (order._id || '').toString();
-                      const statusCls = { pending:'status-pending', paid:'status-paid', completed:'status-completed', cancelled:'status-cancelled', shipped:'status-shipped' }[status] || 'status-pending';
+                      const statusCls = { pending: 'status-pending', paid: 'status-paid', completed: 'status-completed', cancelled: 'status-cancelled', shipped: 'status-shipped' }[status] || 'status-pending';
                       return (
                         <tr key={orderId}>
                           <td><div className="id-cell"><span className="id-text" title={orderId}>{orderId}</span><button className="copy-btn" onClick={() => copyId(orderId)}>Copy</button></div></td>
@@ -960,7 +960,7 @@ export default function Admin() {
                 <label>Order ID <span className="req">*</span></label>
                 <div className="input-with-btn">
                   <input type="text" placeholder="Paste MongoDB ObjectId…" value={orderStatusId} onChange={e => setOrderStatusId(e.target.value)} />
-                  <button className="btn btn-ghost" onClick={() => navigator.clipboard.readText().then(t => setOrderStatusId(t.trim())).catch(()=>{})}>Paste</button>
+                  <button className="btn btn-ghost" onClick={() => navigator.clipboard.readText().then(t => setOrderStatusId(t.trim())).catch(() => { })}>Paste</button>
                 </div>
               </div>
               <div className="section-divider"><span>Select new status</span></div>
@@ -974,13 +974,13 @@ export default function Admin() {
                   <label key={s.value} className={`status-card${selectedStatus === s.value ? ' selected' : ''}`} onClick={() => setSelectedStatus(s.value)}>
                     <div className={`status-card-dot ${s.dotClass}`}></div>
                     <div className="status-card-body"><span className="status-card-label">{s.label}</span><span className="status-card-desc">{s.desc}</span></div>
-                    <svg className="status-card-check" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                    <svg className="status-card-check" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>
                   </label>
                 ))}
               </div>
               <StatusMsg status={orderStatusMsg} />
               <div className="form-actions">
-                <button className="btn btn-ghost" onClick={() => { setOrderStatusId(''); setSelectedStatus(''); setOrderStatusMsg({type:'',msg:''}); }}>Clear</button>
+                <button className="btn btn-ghost" onClick={() => { setOrderStatusId(''); setSelectedStatus(''); setOrderStatusMsg({ type: '', msg: '' }); }}>Clear</button>
                 <button className="btn btn-warning" onClick={submitOrderStatus}>⏱ Update Status</button>
               </div>
             </div>
@@ -994,7 +994,7 @@ export default function Admin() {
         <div className="modal-overlay show" onClick={e => e.target.className.includes('modal-overlay') && setConfirmModal(false)}>
           <div className="modal">
             <div className="modal-icon-wrap danger">
-              <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6M10 11v6M14 11v6M9 6V4h6v2"/></svg>
+              <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6" /><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6M10 11v6M14 11v6M9 6V4h6v2" /></svg>
             </div>
             <h3>Confirm Deletion</h3>
             <p>Are you sure you want to delete product:</p>
