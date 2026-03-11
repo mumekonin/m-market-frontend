@@ -538,9 +538,13 @@ export default function Admin() {
     if (!uploadFile) { setUploadStatus({ type: 'error', msg: '✕ Product image is required.' }); return; }
 
     const formData = new FormData();
-    Object.entries({ proName, proDescrption, price, stock, category }).forEach(([k,v]) => formData.append(k, v));
-    if (color) formData.append('color', color);
-    if (storage) formData.append('storage', storage);
+    formData.append('proName', proName);
+    formData.append('proDescrption', proDescrption);
+    formData.append('price', String(Number(price)));
+    formData.append('stock', String(Number(stock)));
+    formData.append('category', category);
+    formData.append('color', color || '');
+    formData.append('storage', storage || '');
     formData.append('image', uploadFile);
 
     setUploadStatus({ type: 'loading', msg: 'Uploading product…' });
@@ -768,8 +772,11 @@ export default function Admin() {
                   <label>Category <span className="req">*</span></label>
                   <select value={uploadFields.category} onChange={e => setUploadFields(p => ({...p, category: e.target.value}))}>
                     <option value="">Select category…</option>
-                    <option value="phone">Phone</option><option value="laptop">Laptop</option>
-                    <option value="ipad">iPad / Tablet</option><option value="watch">Watch</option><option value="airpod">AirPods</option>
+                    <option value="phone">Phone</option>
+                    <option value="laptop">Laptop</option>
+                    <option value="ipad">iPad / Tablet</option>
+                    <option value="watch">Watch</option>
+                    <option value="AirPods">AirPods</option>
                   </select>
                 </div>
               </div>
@@ -823,8 +830,11 @@ export default function Admin() {
                   <label>Category</label>
                   <select value={updateFields.category} onChange={e => setUpdateFields(p => ({...p, category: e.target.value}))}>
                     <option value="">— Keep current —</option>
-                    <option value="phone">Phone</option><option value="laptop">Laptop</option>
-                    <option value="ipad">iPad / Tablet</option><option value="watch">Watch</option><option value="AirPods">AirPods</option>
+                    <option value="phone">Phone</option>
+                    <option value="laptop">Laptop</option>
+                    <option value="ipad">iPad / Tablet</option>
+                    <option value="watch">Watch</option>
+                    <option value="AirPods">AirPods</option>
                   </select>
                 </div>
               </div>
