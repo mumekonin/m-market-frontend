@@ -110,7 +110,7 @@ export default function Home() {
           <div className="hero-text">
             <span className="hero-pill">
               <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>bolt</span>
-              Premium Electronics Store
+               Electronics Store
             </span>
             <h1 className="hero-h1">The future of tech<br /><span className="hero-accent">starts here.</span></h1>
             <p className="hero-sub">Discover cutting-edge smartphones, laptops, audio gear and more. Quality guaranteed. Fast delivery. Unbeatable prices.</p>
